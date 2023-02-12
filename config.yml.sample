@@ -1,6 +1,12 @@
 WEBHOOK_ID: 1074287383245230090
 WEBHOOK_TOKEN: Pw0HYM9_0q106afVTpOSDiFFxwHE_P3O2GRK77zFbtsy6WLKvf5A45tMcJUTRPBtQK-G
+stackoverflow:
+  order: desc
+  sort: creation
+  site: stackoverflow
+  tagged: nim-lang
 DATA:
+  avatar_url: "%(profile_image)s"
   username: "%(display_name)s"
   embeds:
     - title: "%(title)s"
@@ -12,4 +18,3 @@ DATA:
       fields:
         - name: Tags
           value: "%(tags)s"
-      timestamp: "2023-02-12"
