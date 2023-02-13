@@ -94,7 +94,7 @@ for post in reversed(search_result["items"]):
     )
 
     message_post_request = httpx.post(
-        webhook_execute_URL,
+        str(webhook_execute_URL),
         json=message_object,
     )
     logging.info(
