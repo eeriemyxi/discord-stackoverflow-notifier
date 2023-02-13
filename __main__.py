@@ -48,7 +48,7 @@ def search_stackexchange(**kwargs):
             host=str(
                 STACKOVERFLOW_BASE_URL / str(STACKOVERFLOW_API_VERSION) / "questions"
             ),
-            query=dict(**kwargs),
+            query=kwargs,
         )
     )
     logging.info("Search URL has been successfully built: %s", built_url)
