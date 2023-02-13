@@ -7,8 +7,8 @@ import time
 import httpx
 import yaml
 import yarl
-from yarl import URL
 from rich.logging import RichHandler
+from yarl import URL
 
 FORMAT = "%(message)s"
 logging.basicConfig(
@@ -70,7 +70,15 @@ search_result = search_request.json()
 logging.info("Search result has been successfully retrieved: %s", search_result)
 
 logging.info("Building URL to execute Discord webhook...")
-webhook_execute_URL = URL.build(scheme="https", host=str(DISCORD_API_BASE_URL / "webhooks" / str(CONFIG['WEBHOOK_ID']) / CONFIG['WEBHOOK_TOKEN']))
+webhook_execute_URL = URL.build(
+    scheme="https",
+    host=str(
+        DISCORD_API_BASE_URL
+        / "webhooks"
+        / str(CONFIG["WEBHOOK_ID"])
+        / CONFIG["WEBHOOK_TOKEN"]
+    ),
+)
 logging.info("URL to execute Discord webhook has been parsed: %s", webhook_execute_URL)
 stringified_json = json.dumps(CONFIG["MESSAGE_FORM_DATA"])
 logging.info("Converted message object to string: %s", stringified_json)
@@ -98,7 +106,8 @@ for post in reversed(search_result["items"]):
         json=message_object,
     )
     logging.info(
-        "POST request has been sent and the status code is: %s", message_post_request.status_code
+        "POST request has been sent and the status code is: %s",
+        message_post_request.status_code,
     )
     logging.info("Waiting for five seconds before checking for other items...")
     time.sleep(5)
