@@ -8,8 +8,9 @@ import httpx
 import yaml
 import yarl
 from yarl import URL
+from rich.logging import RichHandler
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, handlers=[RichHandler()])
 
 
 logging.info("Checking whether 'last_checked' file exists or not.")
