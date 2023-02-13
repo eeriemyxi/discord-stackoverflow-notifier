@@ -2,7 +2,7 @@
 This is just a basic StackOverflow notifier that can send Discord webhooks to notify you. The webhook message is completely configurable using the `config.yml` file.
 
 # Configuration
-A sample configuration file is already provided in the repository, you may cheeck it out. `MESSAGE_FORM_DATA` key is a [webhook message object](https://discord.com/developers/docs/resources/webhook#execute-webhook); you can customize it to your liking by reading the official documentation.
+A sample configuration file is already provided in the repository, you may cheeck it out. `MESSAGE_FORM_DATA` key is a [webhook message object](https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params); you can customize it to your liking by reading the official documentation.
 
 ## Formatting
 The syntax is as simple as `%(XXX)s` where `XXX` is the keyword name.
