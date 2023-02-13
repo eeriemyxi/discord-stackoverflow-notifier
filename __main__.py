@@ -38,7 +38,9 @@ STACKOVERFLOW_BASE_URL = yarl.URL("api.stackexchange.com/")
 STACKOVERFLOW_API_VERSION = 2.3
 
 
-def search(**kwargs):
+def search_stackexchange(**kwargs):
+    """Sends GET request to a built search URL of StackExchange
+    as per the given queries as keyword arguments"""
     logging.info("Searching for questions with provided keyword arguments: %s", kwargs)
     built_url = str(
         URL.build(
@@ -53,23 +55,24 @@ def search(**kwargs):
     return httpx.get(built_url)
 
 
-search_request = search(
+search_request = search_stackexchange(
     fromdate=last_checked,
-    order="desc",
-    sort="creation",
-    tagged="nim-lang",
-    site="stackoverflow",
+    order=CONFIG["STACKOVERFLOW"]["order"],
+    sort=CONFIG["STACKOVERFLOW"]["sort"],
+    tagged=CONFIG["STACKOVERFLOW"]["tagged"],
+    site=CONFIG["STACKOVERFLOW"]["site"],
 )
-search_result = json.loads(search_request.text)
+search_result = search_request.json()
 logging.info("Search result has been successfully retrieved: %s", search_result)
 
 webhook_execute_URL = str(
     DISCORD_API_BASE_URL / f"webhooks/{CONFIG['WEBHOOK_ID']}/{CONFIG['WEBHOOK_TOKEN']}"
 )
-stringified_json = json.dumps(CONFIG["DATA"])
+stringified_json = json.dumps(CONFIG["MESSAGE_FORM_DATA"])
 logging.info("Converted message object to string: %s", stringified_json)
 
-for post in search_result["items"]:
+logging.info("Checking for new posts...")
+for post in reversed(search_result["items"]):
     logging.info("New post has been found with following attributes: %s", post)
 
     owner = post["owner"]
@@ -97,6 +100,8 @@ for post in search_result["items"]:
     logging.info("POST request has been sent. Status code: %s", message_post_request.status_code)
     logging.info("Waiting for five seconds before checking for other items...")
     time.sleep(5)
+else:
+    logging.info("No new/other posts found.")
 
 logging.info("Checking finished.")
 unix_time = str(int(time.time()))
