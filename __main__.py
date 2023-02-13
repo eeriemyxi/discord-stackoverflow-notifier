@@ -97,7 +97,9 @@ for post in reversed(search_result["items"]):
         webhook_execute_URL,
         json=message_object,
     )
-    logging.info("POST request has been sent. Status code: %s", message_post_request.status_code)
+    logging.info(
+        "POST request has been sent. Status code: %s", message_post_request.status_code
+    )
     logging.info("Waiting for five seconds before checking for other items...")
     time.sleep(5)
 else:
