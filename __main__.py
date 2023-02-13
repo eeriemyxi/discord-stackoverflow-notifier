@@ -73,8 +73,7 @@ logging.info("Search result has been successfully retrieved: %s", search_result)
 logging.info("Building URL to execute Discord webhook...")
 webhook_execute_URL = URL.build(
     scheme="https",
-    host=str(
-        DISCORD_API_BASE_URL),
+    host=str(DISCORD_API_BASE_URL),
     path=str(
         URL("/")
         / f"v{DISCORD_API_VERSION}"
