@@ -40,6 +40,7 @@ with open("config.yml", "r") as file:
 DISCORD_API_BASE_URL = yarl.URL("discord.com/api")
 STACKOVERFLOW_BASE_URL = yarl.URL("api.stackexchange.com")
 STACKOVERFLOW_API_VERSION = 2.3
+DISCORD_API_VERSION = 10
 
 
 def search_stackexchange(**kwargs):
@@ -73,7 +74,10 @@ logging.info("Building URL to execute Discord webhook...")
 webhook_execute_URL = URL.build(
     scheme="https",
     host=str(
-        DISCORD_API_BASE_URL
+        DISCORD_API_BASE_URL),
+    path=str(
+        URL("/")
+        / f"v{DISCORD_API_VERSION}"
         / "webhooks"
         / str(CONFIG["WEBHOOK_ID"])
         / CONFIG["WEBHOOK_TOKEN"]
