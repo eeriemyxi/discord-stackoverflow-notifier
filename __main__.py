@@ -14,7 +14,7 @@ DISCORD_API_BASE_URL = yarl.URL("discord.com/api")
 STACKOVERFLOW_BASE_URL = yarl.URL("api.stackexchange.com")
 STACKOVERFLOW_API_VERSION = 2.3
 DISCORD_API_VERSION = 10
-FORMAT = "%(message)s"
+LOGGING_MESSAGE_FORMAT = "%(message)s"
 logging.basicConfig(
     level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
 )
