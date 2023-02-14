@@ -16,7 +16,10 @@ STACKOVERFLOW_API_VERSION = 2.3
 DISCORD_API_VERSION = 10
 LOGGING_MESSAGE_FORMAT = "%(message)s"
 logging.basicConfig(
-    level="NOTSET", format=LOGGING_MESSAGE_FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+    level="NOTSET",
+    format=LOGGING_MESSAGE_FORMAT,
+    datefmt="[%X]",
+    handlers=[RichHandler()],
 )
 with open("config.yml", "r") as file:
     config = file.read()
@@ -40,9 +43,11 @@ except FileNotFoundError:
         last_checked = unix_time
 
 
-def search_stackexchange(**kwargs):
-    """Sends GET request to a built search URL of StackExchange
-    as per the given queries as keyword arguments"""
+def search_stackexchange(**kwargs) -> httpx.Response:
+    """Send GET request to a built search URL of StackExchange (from passed keyword arguments).
+    Return `httpx.Response`.
+    """
+
     logging.info("Searching for questions with provided keyword arguments: %s", kwargs)
     built_url = str(
         URL.build(
