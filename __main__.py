@@ -16,7 +16,7 @@ STACKOVERFLOW_API_VERSION = 2.3
 DISCORD_API_VERSION = 10
 LOGGING_MESSAGE_FORMAT = "%(message)s"
 logging.basicConfig(
-    level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+    level="NOTSET", format=LOGGING_MESSAGE_FORMAT, datefmt="[%X]", handlers=[RichHandler()]
 )
 with open("config.yml", "r") as file:
     config = file.read()
