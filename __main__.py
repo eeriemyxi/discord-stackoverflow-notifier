@@ -92,11 +92,9 @@ logging.info("Checking for new posts...")
 for post in reversed(search_result["items"]):
     logging.info("New post has been found with following attributes: %s", post)
 
-    owner = post["owner"]
+    owner = post.pop("owner")
     post["tags"] = ", ".join(post["tags"])
     owner["author_link"] = owner["link"]
-    del owner["link"]
-    del post["owner"]
     kwargs = post | owner
     logging.info("Keywords for formatting has been parsed: %s", kwargs)
 
