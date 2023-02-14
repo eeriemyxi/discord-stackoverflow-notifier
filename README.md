@@ -13,7 +13,6 @@ Heres a table on what I changed:
 | Original     | Modified                                               |
 |--------------|--------------------------------------------------------|
 | `tags`       | Each tag has been comma separated followed by a space. |
-|--------------|--------------------------------------------------------|
 | `owner.link` | It can be retrieved by `author_link`                   |
 
 And that's it for now.
