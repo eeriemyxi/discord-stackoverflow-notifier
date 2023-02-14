@@ -10,10 +10,18 @@ import yarl
 from rich.logging import RichHandler
 from yarl import URL
 
+DISCORD_API_BASE_URL = yarl.URL("discord.com/api")
+STACKOVERFLOW_BASE_URL = yarl.URL("api.stackexchange.com")
+STACKOVERFLOW_API_VERSION = 2.3
+DISCORD_API_VERSION = 10
 FORMAT = "%(message)s"
 logging.basicConfig(
     level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
 )
+with open("config.yml", "r") as file:
+    config = file.read()
+    logging.info("Config file has been read: %s", config)
+    CONFIG: dict = yaml.safe_load(config)
 
 
 logging.info("Checking whether 'last_checked' file exists or not.")
@@ -30,17 +38,6 @@ except FileNotFoundError:
         file.write(str(unix_time))
         logging.info("'last_checked' file has been sucessfully created.")
         last_checked = unix_time
-
-
-with open("config.yml", "r") as file:
-    config = file.read()
-    logging.info("Config file has been read: %s", config)
-    CONFIG: dict = yaml.safe_load(config)
-
-DISCORD_API_BASE_URL = yarl.URL("discord.com/api")
-STACKOVERFLOW_BASE_URL = yarl.URL("api.stackexchange.com")
-STACKOVERFLOW_API_VERSION = 2.3
-DISCORD_API_VERSION = 10
 
 
 def search_stackexchange(**kwargs):
@@ -62,10 +59,10 @@ def search_stackexchange(**kwargs):
 
 search_request = search_stackexchange(
     fromdate=last_checked,
-    order=CONFIG["STACKOVERFLOW"]["order"],
-    sort=CONFIG["STACKOVERFLOW"]["sort"],
-    tagged=CONFIG["STACKOVERFLOW"]["tagged"],
-    site=CONFIG["STACKOVERFLOW"]["site"],
+    order=CONFIG["STACKEXCHANGE"]["order"],
+    sort=CONFIG["STACKEXCHANGE"]["sort"],
+    tagged=CONFIG["STACKEXCHANGE"]["tagged"],
+    site=CONFIG["STACKEXCHANGE"]["site"],
 )
 search_result = search_request.json()
 logging.info("Search result has been successfully retrieved: %s", search_result)
