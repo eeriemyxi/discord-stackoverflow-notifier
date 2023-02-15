@@ -44,10 +44,7 @@ except FileNotFoundError:
 
 
 def search_stackexchange(**kwargs) -> httpx.Response:
-    """Send GET request to a built search URL of StackExchange (from passed keyword arguments).
-    Return `httpx.Response`.
-    """
-
+    """GET built StackExchange URL from passed arguments."""
     logging.info("Searching for questions with provided keyword arguments: %s", kwargs)
     built_url = str(
         URL.build(
