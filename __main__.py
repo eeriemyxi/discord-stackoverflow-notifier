@@ -25,7 +25,11 @@ logging.basicConfig(
     handlers=[RichHandler()],
 )
 
-logging.info(f"All hard-coded constants have been loaded: {', '.join(x+'='+repr(globals()[x]) for x in globals() if x.isupper())}")
+logging.info(
+    f"All hard-coded constants have been loaded: \
+    {', '.join(x+'='+repr(globals()[x]) for x in globals() if x.isupper())}"
+    .replace("    ", "")
+)
 with open(f"{SCRIPT_DIRECTORY}/config.yml", "r") as file:
     config = file.read()
     logging.info("Config file has been read: %s", config)
@@ -50,12 +54,17 @@ except FileNotFoundError:
 
 def search_stackexchange(**kwargs) -> httpx.Response:
     """GET built StackExchange URL from passed arguments."""
-    logging.info("Searching for questions with provided keyword arguments: %s", kwargs)
+    logging.info(
+        "Searching for questions with provided keyword arguments: %s",
+        kwargs
+    )
     built_url = str(
         URL.build(
             scheme="https",
             host=str(
-                STACKOVERFLOW_BASE_URL / str(STACKOVERFLOW_API_VERSION) / "questions"
+                STACKOVERFLOW_BASE_URL
+                / str(STACKOVERFLOW_API_VERSION)
+                / "questions"
             ),
             query=kwargs,
         )
@@ -73,7 +82,10 @@ def main():
         site=CONFIG["STACKEXCHANGE"]["site"],
     )
     search_result = search_request.json()
-    logging.info("Search result has been successfully retrieved: %s", search_result)
+    logging.info(
+        "Search result has been successfully retrieved: %s",
+        search_result
+    )
 
     logging.info("Building URL to execute Discord webhook...")
     webhook_execute_URL = URL.build(
@@ -88,14 +100,18 @@ def main():
         ),
     )
     logging.info(
-        "URL to execute Discord webhook has been parsed: %s", webhook_execute_URL
+        "URL to execute Discord webhook has been parsed: %s",
+         webhook_execute_URL
     )
     stringified_json = json.dumps(CONFIG["MESSAGE_FORM_DATA"])
     logging.info("Converted message object to string: %s", stringified_json)
 
     logging.info("Checking for new posts...")
     for post in reversed(search_result["items"]):
-        logging.info("New post has been found with following attributes: %s", post)
+        logging.info(
+            "New post has been found with following attributes: %s",
+            post
+        )
 
         owner = post.pop("owner")
         post["tags"] = ", ".join(post["tags"])
@@ -105,7 +121,8 @@ def main():
 
         message_object = json.loads(stringified_json % kwargs)
         logging.info(
-            "Message object to pass to the webhook execute URL has been parsed: %s",
+            "Message object to pass to the webhook execute URL has been parsed: \
+            %s",
             message_object,
         )
 
@@ -117,7 +134,9 @@ def main():
             "POST request has been sent and the status code is: %s",
             message_post_request.status_code,
         )
-        logging.info("Waiting for five seconds before checking for other items...")
+        logging.info(
+            "Waiting for five seconds before checking for other items..."
+        )
         time.sleep(5)
     else:
         logging.info("No new/other posts found.")
