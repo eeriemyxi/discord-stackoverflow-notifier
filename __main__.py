@@ -39,13 +39,13 @@ with open(os.path.join(SCRIPT_DIRECTORY, "config.yml"), "r") as file:
 
 logging.info("Checking whether 'last_checked' file exists or not.")
 try:
-    with open(os.path.join(SCRIPT_DIRECTORY, "config.yml"), "r") as file:
+    with open(os.path.join(SCRIPT_DIRECTORY, "last_checked"), "r") as file:
         logging.info("'last_checked' file exists.")
         last_checked = int(file.read())
         logging.info("Last checked time is: %s", last_checked)
 except FileNotFoundError:
     logging.warning("'last_checked' file does not exist. Creating one...")
-    with open(os.path.join(SCRIPT_DIRECTORY, "config.yml"), "w") as file:
+    with open(os.path.join(SCRIPT_DIRECTORY, "last_checked"), "w") as file:
         unix_time = int(time.time())
         logging.info("UNIX time for 'last_checked' file is: %s", unix_time)
         file.write(str(unix_time))
