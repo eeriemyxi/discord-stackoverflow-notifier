@@ -31,7 +31,7 @@ logging.info(
         "    ", ""
     )
 )
-with open(f"{SCRIPT_DIRECTORY}/config.yml", "r") as file:
+with open(os.path.join(SCRIPT_DIRECTORY, "config.yml"), "r") as file:
     config = file.read()
     logging.info("Config file has been read: %s", config)
     CONFIG: dict = yaml.safe_load(config)
@@ -39,13 +39,13 @@ with open(f"{SCRIPT_DIRECTORY}/config.yml", "r") as file:
 
 logging.info("Checking whether 'last_checked' file exists or not.")
 try:
-    with open(f"{SCRIPT_DIRECTORY}/last_checked", "r") as file:
+    with open(os.path.join(SCRIPT_DIRECTORY, "config.yml"), "r") as file:
         logging.info("'last_checked' file exists.")
         last_checked = int(file.read())
         logging.info("Last checked time is: %s", last_checked)
 except FileNotFoundError:
     logging.warning("'last_checked' file does not exist. Creating one...")
-    with open("{SCRIPT_DIRECTORY}/last_checked", "w") as file:
+    with open("os.path.join(SCRIPT_DIRECTORY, "config.yml"), "w") as file:
         unix_time = int(time.time())
         logging.info("UNIX time for 'last_checked' file is: %s", unix_time)
         file.write(str(unix_time))
@@ -131,7 +131,7 @@ def main():
     logging.info("Checking finished.")
     unix_time = str(int(time.time()))
     logging.info("Updating 'last_checked' file to: %s", unix_time)
-    with open("last_checked", "w") as file:
+    with open(os.path.join(SCRIPT_DIRECTORY, "last_checked"), "w") as file:
         file.write(unix_time)
 
 
